@@ -1,0 +1,27 @@
+//creare un repository locale per fare la pull
+git init
+
+per aggiornare il proprio repository locale ad un repository online/remoto:
+- git pull https://github.com/adnauseam92/CloudProjectMMA.git
+
+per aggiungere un file al proprio repository (forkato o non)
+- git add *  // oppure git add nomefile.txt
+- git commit -m "Messaggio della commit"
+- git commit -a
+- git push *link proprio repository*
+
+//in caso git rompa i coglioni con la push normale
+- git push -u *link proprio repository* master 
+
+//poi fare la push al repository remoto principale da github.com
+
+//LINK DEI TRE REPOSITORY
+
+ANDREA
+https://github.com/adnauseam92/CloudProjectMMA.git
+
+MARCO C
+https://github.com/markvonturin777/CloudProjectMMA.git
+
+MARCO V
+https://github.com/Marco240498/CloudProjectMMA.git
