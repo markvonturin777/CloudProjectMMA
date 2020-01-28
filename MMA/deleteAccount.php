@@ -3,6 +3,7 @@ namespace MicrosoftAzure\Storage\Samples;
 
 SESSION_start();
 require 'connection.php';
+require 'azureconnection.php';
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();

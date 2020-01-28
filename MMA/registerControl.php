@@ -2,6 +2,7 @@
 
 namespace MicrosoftAzure\Storage\Samples;
 require_once "vendor/autoload.php";
+require 'azureconnection.php';
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\BlobSharedAccessSignatureHelper;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
@@ -56,8 +57,6 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
         if($bool==true){
             sleep(2);
             
-            $connectionString = 'DefaultEndpointsProtocol=https;AccountName=blobexamplephp;AccountKey=VWi8DOUFl09513L8ydnbxI81tBagct8fQWTpU6q8KR3UFY0vHnwXLyWm1hPWmdZcvEJ9KH4OIHwpYyBQgQov6Q==;EndpointSuffix=core.windows.net';
-            $blobClient = BlobRestProxy::createBlobService($connectionString);
             $containerName = ($surname);
             echo "</br></br></br>";
             //var_dump($containerName);

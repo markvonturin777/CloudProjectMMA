@@ -6,6 +6,7 @@ if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+require 'azureconnection.php';
 require_once 'vendor\autoload.php';
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
@@ -119,9 +120,6 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
         <form method="post" action="delete.php">
         
             <?php
-
-                $connectionString = 'DefaultEndpointsProtocol=https;AccountName=blobexamplephp;AccountKey=VWi8DOUFl09513L8ydnbxI81tBagct8fQWTpU6q8KR3UFY0vHnwXLyWm1hPWmdZcvEJ9KH4OIHwpYyBQgQov6Q==;EndpointSuffix=core.windows.net';
-                $blobClient = BlobRestProxy::createBlobService($connectionString);
 
                 $listBlobsOptions = new ListBlobsOptions();
                 $listBlobsOptions->setPrefix("");
