@@ -1,6 +1,5 @@
 <?php 
 namespace MicrosoftAzure\Storage\Samples;
-
 SESSION_start();
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
@@ -55,7 +54,14 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
         });
     });
     </script>
+
     <style>
+    body{
+        margin: 2% 10%;
+    }
+    .introClass{
+        margin: auto;
+    }
     .gallery {
         -webkit-column-count: 3;
         -moz-column-count: 3;
@@ -93,19 +99,8 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
 }
     </style>
  </head>
-  <body>
-        <div class=" float-right dropdown w-75 ">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Opzioni
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item mb-auto " href="homepage.php">Home</a>
-                <a class="dropdown-item" href="logout.php">Log out</a>
-                <a class="dropdown-item" href="deleteAccount.php">Delete Account</a>
-                <a class="dropdown-item" href="info.php">Infos</a>
-            </div>
-        </div>
-        <p>Bentornato, <b><?php  echo $_SESSION['nome']; ?></b></p>
+  <body>  
+        <span class="introClass">Bentornato, <b><?php  echo $_SESSION['nome']; ?></b></span>
         
         <form method="post" action="upload.php" accept="image/*" enctype='multipart/form-data'>
                 <div class="input-group w-25">
@@ -116,7 +111,17 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                     <input type='submit' value='Upload' name='but_upload'>
                 </div>
         </form>
-        </br>
+        <div class=" float-right dropdown w-50">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Opzioni
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item mb-auto " href="homepage.php">Home</a>
+                <a class="dropdown-item" href="logout.php">Log out</a>
+                <a class="dropdown-item" href="deleteAccount.php">Delete Account</a>
+                <a class="dropdown-item" href="info.php">Infos</a>
+            </div>
+        </div>
         <form method="post" action="delete.php">
         
             <?php
@@ -136,12 +141,12 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                     foreach ($result->getBlobs() as $blob)
                     {           
                 ?>
-                    <div class="pics animation all 2">
+                    <div class="introClass">
                         <?php 
                             echo($blob->getName());
                         ?>
                         <input type="checkbox" name="img_list[]" value="<?php echo $blob->getName() ?>"><br>                 
-                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" alt="img" height="200" width="200"><br /><br/> 
+                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" alt="img" height="200" width="200"><br/><br/> 
                     </div>
                     
                     <?php
