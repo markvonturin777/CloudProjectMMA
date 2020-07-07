@@ -5,6 +5,7 @@ if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+require 'connection.php';
 require 'azureconnection.php';
 require_once 'vendor\autoload.php';
 
@@ -148,8 +149,18 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                         <input type="checkbox" name="img_list[]" value="<?php echo $blob->getName() ?>"><br>                 
                         <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" alt="img" height="200" width="200"><br/><br/> 
                     </div>
-                    
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Share
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item mb-auto " href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),3600)?>">1 ora</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),43200) ?>">12 ore</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),86400) ?>">1 giorno</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),604800) ?>">1 settimana</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),2419200) ?>">1 mese</a>
+                    </div>
                     <?php
+                        echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
                     }
                     ?> 
             </div> 
@@ -163,4 +174,22 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
 
   </body>
 
+
+    <?php 
+        function setImageExpirableToken($imgName,$blobLink,$expireTime)
+        {
+            $query='SELECT titolo FROM foto WHERE titolo="'.$imgName.'"';
+            //echo $query;
+            $sth1 = $pdo->prepare($query);
+            $sth1->execute();
+            $resultVerification = $sth1->fetch(\PDO::FETCH_ASSOC);
+
+            if($resultVerification != "")
+            {                                       //per generated token si intende il link, modificare db sql aggiungere colonna con tempo del token
+                $query1="INSERT INTO token (expiring_date, tokentime, generated_token) VALUES ('".$name."','".$expireTime."','".$blobLink."')";
+                $sth2 = $pdo->prepare($query1);
+                $bool=$sth2->execute();
+            }                                       //creare pagina php senza session che fa query su tabella token e verifica che la data corrente sia minore di quella di expiring_date
+        }    
+    ?>
 </html>

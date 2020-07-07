@@ -30,12 +30,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `foto` (
   `id` int(10) NOT NULL,
-  `titolo` text DEFAULT NULL,
+  `nome` text DEFAULT NULL,
   `data` text DEFAULT NULL,
   `dimensione` text DEFAULT NULL,
-  `flash` text DEFAULT NULL,
   `ISO` text DEFAULT NULL,
-  `idtoken` int(10) NOT NULL,
   `iduser` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -48,7 +46,10 @@ CREATE TABLE `foto` (
 CREATE TABLE `token` (
   `id` int(10) NOT NULL,
   `expiring_date` text NOT NULL,
-  `generated_token` text NOT NULL
+  `tokentime` text NOT NULL,
+  `generated_token` text NOT NULL,
+  `idfoto` int(10) NOT NULL,
+  `iduser` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

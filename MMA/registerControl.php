@@ -78,7 +78,7 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                 $error_message = $e->getMessage();
                 echo $code.": ".$error_message.PHP_EOL;
             }
-            //header("location: /index.php");
+            header("location: /index.php");
         }
         else {
             header("location: /register.php");
