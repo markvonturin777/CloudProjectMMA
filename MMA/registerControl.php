@@ -64,10 +64,17 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
             var_dump($containerName);
 
             try{
-                $container=$blobClient->createContainer($containerNameLow);
+                /*$createContainerOptions = new CreateContainerOptions();
+
+                // Set public access policy. Possible values are
+                $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
+                $container=$blobClient->createContainer($containerNameLow, $createContainerOptions);*/
+                createContainer($blobClient,$containerNameLow);
             }
-            catch(ServiceException $e) {
+            catch(ServiceException $e) 
+            {
                 $code = $e->getCode();
+                
                 $error_message = $e->getMessage();
                 echo $code.": ".$error_message.PHP_EOL;
             }
@@ -78,4 +85,19 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
             $_SESSION['resultRegistration'] = 1;
         }
     
+}
+
+function createContainer($blobClient,$name)
+{
+    $createContainerOptions = new CreateContainerOptions();
+    $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
+    var_dump($createContainerOptions);
+    var_dump($createContainerOptions->getPublicAccess());
+    try {
+        $container=$blobClient->createContainer($name, $createContainerOptions);
+    } catch (ServiceException $e) {
+        $code = $e->getCode();
+        $error_message = $e->getMessage();
+        echo $code.": ".$error_message.PHP_EOL;
     }
+}

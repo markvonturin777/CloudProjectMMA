@@ -1,14 +1,21 @@
 <?php
 
+<<<<<<< HEAD
 
 
 
+=======
+namespace MicrosoftAzure\Storage\Samples;
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
 SESSION_start();
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+<<<<<<< HEAD
 require_once(__DIR__ . '/photo.php');
+=======
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
 require 'azureconnection.php';
 require_once(__DIR__ . '/vendor/autoload.php');
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
@@ -106,6 +113,7 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
     }
 }
     </style>
+<<<<<<< HEAD
 </head>
 <body>
 <input type="button" value="Homepage" class="homebutton" id="btnHome" 
@@ -183,6 +191,61 @@ foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memo
      
         ?>
         
+=======
+    </head>
+    <body>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+    </body>
+    </html>
+
+
+    <?php
+
+    $listBlobsOptions = new ListBlobsOptions();
+    $listBlobsOptions->setPrefix("");
+    $user =  $_SESSION['userContainer'];
+
+    do{
+        $result = $blobClient->listBlobs(strtolower($user), $listBlobsOptions);
+            //var_dump($result);
+    ?> 
+
+    <br> <br> <br>
+    <div class="gallery d-flex text-center" id="gallery">
+    <?php 
+
+
+
+
+        foreach ($result->getBlobs() as $blob)
+        {  
+            
+            
+    ?>
+    <li>
+
+        <div class="introClass responsive">
+            <?php 
+                echo($blob->getName());
+            ?>
+                
+            <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+        
+            <?php echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
+
+            echo var_dump($blob);
+    
+        
+
+        $exif = exif_read_data($blob->getUrl(), "FILE,COMPUTED,ANY_TAG,IFD0,THUMBNAIL,COMMENT,EXIF", true);
+        foreach ($exif as $key => $section) {
+            foreach ($section as $name => $val) {
+                echo "$key.$name: $val<br />\n";
+            }
+    }
+        ?>
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
     </div>
  </li>
     
