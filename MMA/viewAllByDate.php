@@ -1,15 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-
-
-
-=======
-<<<<<<< HEAD
-
-
-
-=======
 namespace MicrosoftAzure\Storage\Samples;
 >>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
 >>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
@@ -18,14 +8,11 @@ if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
-<<<<<<< HEAD
+
 require_once(__DIR__ . '/photo.php');
-=======
-<<<<<<< HEAD
-require_once(__DIR__ . '/photo.php');
-=======
->>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
->>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
+
+//require_once(__DIR__ . '/photo.php');
+
 require 'azureconnection.php';
 require_once(__DIR__ . '/vendor/autoload.php');
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
@@ -50,11 +37,6 @@ use MicrosoftAzure\Storage\Common\Models\Metrics;
 use MicrosoftAzure\Storage\Common\Models\RetentionPolicy;
 use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
 ?>
-
-
-
-
-
 
 <html>
   <head>
@@ -123,17 +105,12 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
     }
 }
     </style>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
+
 </head>
 <body>
 <input type="button" value="Homepage" class="homebutton" id="btnHome" 
 onClick="document.location.href='homepage.php'" />
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-<<<<<<< HEAD
-=======
 
 </body>
 </html>
@@ -195,22 +172,11 @@ foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memo
               
         <img src="<?php  echo $blob->url ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
       
-        <?php echo $blob->date;
-
-      
+        <?php echo $blob->date;?>
     
-        
-
-
-
-     
-        ?>
-        
-=======
     </head>
     <body>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
->>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
 
 </body>
 </html>
@@ -273,23 +239,11 @@ foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memo
         <img src="<?php  echo $blob->url ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
       
         <?php echo $blob->date;
-
-      
-    
         
-
-
-
-     
         ?>
-<<<<<<< HEAD
         
-=======
->>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
->>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
     </div>
  </li>
-    
     <?php
     }
     ?> 
