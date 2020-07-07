@@ -6,8 +6,7 @@ if( !isset($_SESSION["nome"]) ){
   exit();
 }
 require 'azureconnection.php';
-require_once 'vendor\autoload.php';
-
+require_once(__DIR__ . '/vendor/autoload.php');
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\BlobSharedAccessSignatureHelper;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
@@ -109,7 +108,14 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
                     <input type='submit' value='Upload' name='but_upload'>
+
                 </div>
+                </form>
+
+                <form action="viewAllByDate.php" >
+             <input type="submit" value="Ordina per data" />
+
+
         </form>
         <div class=" float-right dropdown w-50">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -139,15 +145,24 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
             <div class="gallery d-flex text-center" id="gallery">
                 <?php 
                     foreach ($result->getBlobs() as $blob)
-                    {           
+                    {    
+                            
                 ?>
-                    <div class="introClass">
+                
+                    <div class="introClass responsive">
                         <?php 
                             echo($blob->getName());
                         ?>
+                        
                         <input type="checkbox" name="img_list[]" value="<?php echo $blob->getName() ?>"><br>                 
-                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" alt="img" height="200" width="200"><br/><br/> 
+                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+                      
+                        <?php echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
+                     
+                        ?>
+                        
                     </div>
+                 
                     
                     <?php
                     }
