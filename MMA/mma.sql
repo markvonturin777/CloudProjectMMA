@@ -28,12 +28,12 @@ SET time_zone = "+00:00";
 -- Struttura della tabella `foto`
 --
 
-CREATE TABLE `foto` (
+CREATE TABLE foto (
   `id` int(10) NOT NULL,
   `nome` text DEFAULT NULL,
   `data` text DEFAULT NULL,
   `dimensione` text DEFAULT NULL,
-  `ISO` text DEFAULT NULL,
+  `url` text DEFAULT NULL,
   `iduser` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -74,8 +74,7 @@ CREATE TABLE `users` (
 -- Indici per le tabelle `foto`
 --
 ALTER TABLE `foto`
-  ADD PRIMARY KEY (`id`,`idtoken`,`iduser`),
-  ADD KEY `idtoken` (`idtoken`),
+  ADD PRIMARY KEY (`id`,`iduser`),
   ADD KEY `iduser` (`iduser`);
 
 --
@@ -121,7 +120,6 @@ ALTER TABLE `users`
 -- Limiti per la tabella `foto`
 --
 ALTER TABLE `foto`
-  ADD CONSTRAINT `foto_ibfk_1` FOREIGN KEY (`idtoken`) REFERENCES `token` (`id`),
   ADD CONSTRAINT `foto_ibfk_2` FOREIGN KEY (`iduser`) REFERENCES `users` (`id`);
 COMMIT;
 

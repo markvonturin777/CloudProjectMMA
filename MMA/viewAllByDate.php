@@ -1,11 +1,14 @@
 <?php
 
-namespace MicrosoftAzure\Storage\Samples;
+
+
+
 SESSION_start();
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+require_once(__DIR__ . '/photo.php');
 require 'azureconnection.php';
 require_once(__DIR__ . '/vendor/autoload.php');
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
@@ -103,59 +106,83 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
     }
 }
     </style>
-    </head>
-    <body>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+</head>
+<body>
+<input type="button" value="Homepage" class="homebutton" id="btnHome" 
+onClick="document.location.href='homepage.php'" />
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-    </body>
-    </html>
-
-
-    <?php
-
-    $listBlobsOptions = new ListBlobsOptions();
-    $listBlobsOptions->setPrefix("");
-    $user =  $_SESSION['userContainer'];
-
-    do{
-        $result = $blobClient->listBlobs(strtolower($user), $listBlobsOptions);
-            //var_dump($result);
-    ?> 
-
-    <br> <br> <br>
-    <div class="gallery d-flex text-center" id="gallery">
-    <?php 
+</body>
+</html>
 
 
+<?php
+
+$listBlobsOptions = new ListBlobsOptions();
+$listBlobsOptions->setPrefix("");
+$user =  $_SESSION['userContainer'];
+
+do{
+    $result = $blobClient->listBlobs(strtolower($user), $listBlobsOptions);
+        //var_dump($result);
+?> 
+
+<br> <br> <br>
+<div class="gallery d-flex text-center" id="gallery">
+<?php 
 
 
-        foreach ($result->getBlobs() as $blob)
-        {  
-            
-            
-    ?>
-    <li>
 
-        <div class="introClass responsive">
-            <?php 
-                echo($blob->getName());
-            ?>
-                
-            <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memorizzando  nome url e data
+{
+    $photo = new Photo();
+    $photo->name = $blob->getName();
+    $photo->url = $blob->getUrl();
+    $photo->date = $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a");
+
+
+    $blobEasy[] = $photo;
+
+      
+    };
+
+
+
+    usort($blobEasy, function($a, $b)
+    {
+    $date1 = strtotime($a->date);
+    $date2 = strtotime($b->date);
+    if ($date1 < $date2) return -1;
+    if ($date1 == $date2) return 0;
+    if ($date1 > $date2) return 1;
+    });
+    
+
+    foreach ($blobEasy as $blob)
+    {  
         
-            <?php echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
+        
+?>
+<li>
 
-            echo var_dump($blob);
+    <div class="introClass">
+        <?php 
+            echo($blob->name);
+        ?>
+              
+        <img src="<?php  echo $blob->url ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+      
+        <?php echo $blob->date;
+
+      
     
         
 
-        $exif = exif_read_data($blob->getUrl(), "FILE,COMPUTED,ANY_TAG,IFD0,THUMBNAIL,COMMENT,EXIF", true);
-        foreach ($exif as $key => $section) {
-            foreach ($section as $name => $val) {
-                echo "$key.$name: $val<br />\n";
-            }
-    }
+
+
+     
         ?>
+        
     </div>
  </li>
     

@@ -1,13 +1,16 @@
 <?php 
+
 namespace MicrosoftAzure\Storage\Samples;
+ob_start();
 SESSION_start();
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+//error_reporting(0);
 require 'connection.php';
 require 'azureconnection.php';
-require_once 'vendor\autoload.php';
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\BlobSharedAccessSignatureHelper;
@@ -110,7 +113,14 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
                     <input type='submit' value='Upload' name='but_upload'>
+
                 </div>
+                </form>
+
+                <form action="viewAllByDate.php" >
+             <input type="submit" value="Ordina per data" />
+
+
         </form>
         <div class=" float-right dropdown w-50">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -140,27 +150,39 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
             <div class="gallery d-flex text-center" id="gallery">
                 <?php 
                     foreach ($result->getBlobs() as $blob)
-                    {           
+                    {    
+                            
                 ?>
-                    <div class="introClass">
+                
+                    <div class="introClass responsive">
                         <?php 
                             echo($blob->getName());
                         ?>
+                        
                         <input type="checkbox" name="img_list[]" value="<?php echo $blob->getName() ?>"><br>                 
-                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" alt="img" height="200" width="200"><br/><br/> 
+                        <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+                      
+			<div class=" float-right dropdown w-50">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Share
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item mb-auto" name="onehour" href='homepage.php?onehour=true&imgURL=<?php echo $blob->getURL()?>&imgName=<?php echo $blob->getName()?>'>1 ora</a>
+                            <a class="dropdown-item" name="twelvehours" href='homepage.php?twelvehours=true&imgURL=<?php echo $blob->getURL()?>&imgName=<?php echo $blob->getName()?>'>12 ore</a>
+                            <a class="dropdown-item" name="oneday" href='homepage.php?oneday=true&imgURL=<?php echo $blob->getURL()?>&imgName=<?php echo $blob->getName()?>'>1 giorno</a>
+                            <a class="dropdown-item" name="oneweek" href='homepage.php?oneweek=true&imgURL=<?php echo $blob->getURL()?>&imgName=<?php echo $blob->getName()?>'>1 settimana</a>
+                            <a class="dropdown-item" name="onemonth" href='homepage.php?onemonth=true&imgURL=<?php echo $blob->getURL()?>&imgName=<?php echo $blob->getName()?>'>1 mese</a>
+                        </div>
+
+                    	</div> 
+                        <?php echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
+                     
+                        ?>
+                        
                     </div>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Share
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item mb-auto " href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),3600)?>">1 ora</a>
-                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),43200) ?>">12 ore</a>
-                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),86400) ?>">1 giorno</a>
-                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),604800) ?>">1 settimana</a>
-                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),2419200) ?>">1 mese</a>
-                    </div>
+                 
+                    
                     <?php
-                        echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
                     }
                     ?> 
             </div> 
@@ -172,24 +194,44 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
             <input type='submit' value='Delete' name='but_delete'>
         </form>
 
+
+<?php 
+        if (isset($_GET['onehour'])) 
+        {
+	$imgName = $_GET['imgName'];
+        $imgURL = $_GET['imgURL'];
+            $time = 3600;
+            header("location: /createToken.php?timeExpiration=$time&imgName=$imgName&imgURL=$imgURL");
+        }
+        if (isset($_GET['twelvehours'])) 
+        {	
+	$imgName = $_GET['imgName'];
+        $imgURL = $_GET['imgURL'];
+            $time = 43200;
+            header("location: /createToken.php?timeExpiration=$time&imgName=$imgName&imgURL=$imgURL");
+        }
+        if (isset($_GET['oneday'])) 
+        {
+	$imgName = $_GET['imgName'];
+        $imgURL = $_GET['imgURL'];
+            $time = 86400;
+            header("location: /createToken.php?timeExpiration=$time&imgName=$imgName&imgURL=$imgURL");
+        }
+        if (isset($_GET['oneweek'])) 
+        {
+	$imgName = $_GET['imgName'];
+        $imgURL = $_GET['imgURL'];
+            $time = 604800;
+            header("location: /createToken.php?timeExpiration=$time&imgName=$imgName&imgURL=$imgURL");
+        }
+        if (isset($_GET['onemonth'])) 
+        {
+	$imgName = $_GET['imgName'];
+        $imgURL = $_GET['imgURL'];
+            $time = 2419200;
+            header("location: /createToken.php?timeExpiration=$time&imgName=$imgName&imgURL=$imgURL");
+        }   
+    ?>
   </body>
 
-
-    <?php 
-        function setImageExpirableToken($imgName,$blobLink,$expireTime)
-        {
-            $query='SELECT titolo FROM foto WHERE titolo="'.$imgName.'"';
-            //echo $query;
-            $sth1 = $pdo->prepare($query);
-            $sth1->execute();
-            $resultVerification = $sth1->fetch(\PDO::FETCH_ASSOC);
-
-            if($resultVerification != "")
-            {                                       //per generated token si intende il link, modificare db sql aggiungere colonna con tempo del token
-                $query1="INSERT INTO token (expiring_date, tokentime, generated_token) VALUES ('".$name."','".$expireTime."','".$blobLink."')";
-                $sth2 = $pdo->prepare($query1);
-                $bool=$sth2->execute();
-            }                                       //creare pagina php senza session che fa query su tabella token e verifica che la data corrente sia minore di quella di expiring_date
-        }    
-    ?>
 </html>

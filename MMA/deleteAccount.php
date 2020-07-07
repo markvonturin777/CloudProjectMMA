@@ -59,17 +59,6 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
 
  </head>
   <body>
-        <div class=" float-right dropdown ">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="homepage.php">Home</a>
-                <a class="dropdown-item" href="logout.php">Log out</a>
-                <a class="dropdown-item" href="deleteAccount.php">Delete your account</a>           
-                <a class="dropdown-item" href="info.php">Infos</a>
-            </div>
-        </div>
         <div class="d-flex justify-content-center">
             <h1 class="w-75">Sei davvero sicuro di voler eliminare il tuo account? Una volta eliminato tutte le foto caricate su cloud non saranno piu recuperabili</h1>
         </div>
