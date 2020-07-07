@@ -1,14 +1,31 @@
 <?php
 
+<<<<<<< HEAD
 
 
 
+=======
+<<<<<<< HEAD
+
+
+
+=======
+namespace MicrosoftAzure\Storage\Samples;
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
 SESSION_start();
 if( !isset($_SESSION["nome"]) ){
   header("location: index.php");
   exit();
 }
+<<<<<<< HEAD
 require_once(__DIR__ . '/photo.php');
+=======
+<<<<<<< HEAD
+require_once(__DIR__ . '/photo.php');
+=======
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
 require 'azureconnection.php';
 require_once(__DIR__ . '/vendor/autoload.php');
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
@@ -106,11 +123,17 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
     }
 }
     </style>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
 </head>
 <body>
 <input type="button" value="Homepage" class="homebutton" id="btnHome" 
 onClick="document.location.href='homepage.php'" />
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+<<<<<<< HEAD
+=======
 
 </body>
 </html>
@@ -183,6 +206,87 @@ foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memo
      
         ?>
         
+=======
+    </head>
+    <body>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
+
+</body>
+</html>
+
+
+<?php
+
+$listBlobsOptions = new ListBlobsOptions();
+$listBlobsOptions->setPrefix("");
+$user =  $_SESSION['userContainer'];
+
+do{
+    $result = $blobClient->listBlobs(strtolower($user), $listBlobsOptions);
+        //var_dump($result);
+?> 
+
+<br> <br> <br>
+<div class="gallery d-flex text-center" id="gallery">
+<?php 
+
+
+
+foreach ($result->getBlobs() as $blob) // rendo piu semplice l'oggetto blob memorizzando  nome url e data
+{
+    $photo = new Photo();
+    $photo->name = $blob->getName();
+    $photo->url = $blob->getUrl();
+    $photo->date = $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a");
+
+
+    $blobEasy[] = $photo;
+
+      
+    };
+
+
+
+    usort($blobEasy, function($a, $b)
+    {
+    $date1 = strtotime($a->date);
+    $date2 = strtotime($b->date);
+    if ($date1 < $date2) return -1;
+    if ($date1 == $date2) return 0;
+    if ($date1 > $date2) return 1;
+    });
+    
+
+    foreach ($blobEasy as $blob)
+    {  
+        
+        
+?>
+<li>
+
+    <div class="introClass">
+        <?php 
+            echo($blob->name);
+        ?>
+              
+        <img src="<?php  echo $blob->url ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
+      
+        <?php echo $blob->date;
+
+      
+    
+        
+
+
+
+     
+        ?>
+<<<<<<< HEAD
+        
+=======
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
     </div>
  </li>
     

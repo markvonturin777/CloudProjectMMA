@@ -11,7 +11,10 @@ if( !isset($_SESSION["nome"]) ){
 require 'connection.php';
 require 'azureconnection.php';
 require_once(__DIR__ . '/vendor/autoload.php');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Blob\BlobSharedAccessSignatureHelper;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
@@ -162,6 +165,7 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                         <input type="checkbox" name="img_list[]" value="<?php echo $blob->getName() ?>"><br>                 
                         <img src="<?php  echo $blob->getUrl() ?>"  class="img-fluid" onclick="Details.php" alt="img" height="200" width="200"><br/><br/> 
                       
+<<<<<<< HEAD
 			<div class=" float-right dropdown w-50">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Share
@@ -175,13 +179,34 @@ use MicrosoftAzure\Storage\Common\Models\ServiceProperties;
                         </div>
 
                     	</div> 
+=======
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
                         <?php echo $blob->getProperties()->getCreationTime()->format("F j, Y, g:i a") ;
                      
                         ?>
                         
+<<<<<<< HEAD
                     </div>
                  
                     
+=======
+                    </div>
+<<<<<<< HEAD
+                 
+                    
+=======
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Share
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item mb-auto " href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),3600)?>">1 ora</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),43200) ?>">12 ore</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),86400) ?>">1 giorno</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),604800) ?>">1 settimana</a>
+                        <a class="dropdown-item" href="<?php  setImageExpirableToken($blob->getName(),$blob->getUrl(),2419200) ?>">1 mese</a>
+                    </div>
+>>>>>>> dfc9568bc4abb9c563ddd4e9e6dcd669c54d9752
+>>>>>>> 43dc006b259dbeca3b28081a175fcea5e0b11e32
                     <?php
                     }
                     ?> 
